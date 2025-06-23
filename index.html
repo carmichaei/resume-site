@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connor Carmichael Resume</title>
+  <style>
+    :root {
+      --primary-bg: #f8f5f2;
+      --card-bg: #ffffff;
+      --accent: #333333;
+      --highlight: #0077b6;
+      --text: #222222;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--primary-bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .resume-container {
+      width: 95vw;
+      height: 95vh;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      color: var(--highlight);
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+      z-index: 100;
+      transition: 0.3s ease;
+      max-width: 600px;
+    }
+
+    .modal.active {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 50;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    @media (max-width: 800px) {
+      .resume-container {
+        display: block;
+        overflow-y: scroll;
+        height: auto;
+      }
+      .card {
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <div class="card" onclick="openModal('about')">
+      <h3>About</h3>
+      <p>Operational leader with a knack for automation and complex challenges.</p>
+    </div>
+    <div class="card" onclick="openModal('education')">
+      <h3>Education</h3>
+      <p>MHA, BHL + 3 minors | PMP & Security+ | Military leadership schools</p>
+    </div>
+    <div class="card" onclick="openModal('awards')">
+      <h3>Awards</h3>
+      <p>MSM, GWOT, German Armed Forces Badge, etc.</p>
+    </div>
+    <div class="card" onclick="openModal('experience')">
+      <h3>Experience</h3>
+      <p>Lead Consultant, Aide-de-Camp, CIO — See more</p>
+    </div>
+    <div class="card" onclick="openModal('contact')">
+      <h3>Contact</h3>
+      <p>Email, phone, LinkedIn, location</p>
+    </div>
+    <div class="card" onclick="openModal('hobbies')">
+      <h3>Hobbies</h3>
+      <p>App Dev, Biking, Design, Real Estate</p>
+    </div>
+    <div class="card" onclick="openModal('quote')">
+      <h3>Testimonial</h3>
+      <p>“Thrives unsupervised, impressive work ethic.” – COL Vest</p>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeModal()"></div>
+
+  <div class="modal" id="about">
+    <h2>About</h2>
+    <p>Skilled operational leader with a knack for creating efficiencies. Quick to automate tasks and thrives on complex challenges.</p>
+  </div>
+  <div class="modal" id="education">
+    <h2>Education</h2>
+    <p>Master’s of Health Administration<br>Bachelor’s of Healthcare Leadership<br>Minors: Chemistry, Biology, Military Science<br>PMP, Security+, BOLC, MIMC</p>
+  </div>
+  <div class="modal" id="awards">
+    <h2>Notable Awards</h2>
+    <p>Meritorious Service Medal, National Defense Service Medal, Global War on Terrorism Expeditionary Medal, Norwegian Foot March Badge, German Armed Forces Proficiency Badge</p>
+  </div>
+  <div class="modal" id="experience">
+    <h2>Experience</h2>
+    <p><strong>Lead Consultant – Forvis Mazars:</strong> $75M in non-labor savings, Power BI tools<br><strong>Aide-de-Camp – US Army:</strong> Executive support to MG Yost, nationwide operations<br><strong>CIO – US Army:</strong> Modernized EHRs for 2 hospitals, 10+ clinics overseas</p>
+  </div>
+  <div class="modal" id="contact">
+    <h2>Contact</h2>
+    <p>Email: carmichaelpfi@gmail.com<br>Phone: (907) 312-6672<br>LinkedIn: linkedin.com/in/ConnorCarm<br>Location: Valparaiso, IN</p>
+  </div>
+  <div class="modal" id="hobbies">
+    <h2>Hobbies & Interests</h2>
+    <p>App Development (React Native), Skiing, Biking, Travel, Graphic Design, Real Estate Investing</p>
+  </div>
+  <div class="modal" id="quote">
+    <h2>Quote</h2>
+    <p>“Connor thrives unsupervised, has an impressive work ethic, and his professionalism is well-suited for any team.” – COL Dickie Vest</p>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add("active");
+      document.getElementById("overlay").classList.add("active");
+    }
+    function closeModal() {
+      document.querySelectorAll(".modal").forEach(m => m.classList.remove("active"));
+      document.getElementById("overlay").classList.remove("active");
+    }
+  </script>
+</body>
+</html>
