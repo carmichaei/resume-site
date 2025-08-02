@@ -28,31 +28,62 @@ interface Resume {
 function App() {
   const [resume, setResume] = useState<Resume | null>(null);
   const [error, setError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [retryCount, setRetryCount] = useState(0);
+
+  const fetchResume = async () => {
+    try {
+      setIsLoading(true);
+      setError('');
+      const res = await fetch(process.env.REACT_APP_API_URL || 'http://localhost:5000/api/resume');
+      if (!res.ok) throw new Error(`Failed to fetch resume data (${res.status})`);
+      const data = await res.json();
+      setResume(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/resume')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch resume data');
-        return res.json();
-      })
-      .then(data => setResume(data))
-      .catch(err => setError(err.message));
-  }, []);
+    fetchResume();
+  }, [retryCount]);
 
   if (error) return (
     <div className="error-container">
-      <h2>Something went wrong</h2>
-      <p>{error}</p>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h2>Something went wrong</h2>
+        <p>{error}</p>
+        <button 
+          onClick={() => setRetryCount(c => c + 1)}
+          className="retry-button"
+        >
+          Try Again
+        </button>
+      </motion.div>
     </div>
   );
 
-  if (!resume) return (
+  if (!resume || isLoading) return (
     <div className="loading-container">
       <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        animate={{ 
+          rotate: 360,
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ 
+          rotate: { duration: 1, repeat: Infinity, ease: "linear" },
+          scale: { duration: 1, repeat: Infinity }
+        }}
         className="loading-spinner"
-      />
+      >
+        <div className="loading-text">Loading Resume...</div>
+      </motion.div>
     </div>
   );
 

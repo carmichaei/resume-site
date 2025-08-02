@@ -1,17 +1,48 @@
+:root {
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --text-primary: #222222;
+    --text-secondary: #666666;
+    --accent: #2a7ae2;
+    --border: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.07);
+    --tag-bg: #e9ecef;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --text-primary: #ffffff;
+        --text-secondary: #bbbbbb;
+        --accent: #4a9eff;
+        --border: #404040;
+        --shadow: rgba(0, 0, 0, 0.2);
+        --tag-bg: #404040;
+    }
+}
+
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f8f9fa;
-    color: #222;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     margin: 0;
     padding: 0;
+    line-height: 1.6;
+    transition: background-color 0.3s ease;
 }
 .container {
-    max-width: 700px;
+    max-width: min(90%, 700px);
     margin: 2rem auto;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    background: var(--bg-secondary);
+    padding: clamp(1rem, 5vw, 2rem);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--shadow);
 }
 header {
     border-bottom: 1px solid #e0e0e0;
@@ -20,12 +51,17 @@ header {
 }
 h1 {
     margin: 0 0 0.5rem 0;
-    font-size: 2.2rem;
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    background: linear-gradient(90deg, var(--accent), #6b9dff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 h2 {
-    color: #2a7ae2;
+    color: var(--accent);
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
     margin-top: 2rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
 }
 .job, .education {
     margin-bottom: 1.2rem;
@@ -46,16 +82,20 @@ h2 {
     padding: 0;
 }
 .skills li {
-    background: #e9ecef;
-    border-radius: 4px;
-    padding: 0.3rem 0.8rem;
-    font-size: 0.98rem;
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 0.4rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+.skills li:hover {
+    transform: translateY(-1px);
+    background: var(--accent);
+    color: var(--bg-secondary);
 }
 @media (max-width: 600px) {
     .container {
-        padding: 1rem;
-    }
-    h1 {
-        font-size: 1.5rem;
+        margin: 1rem auto;
+        border-radius: 8px;
     }
 }
