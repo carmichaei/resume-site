@@ -211,7 +211,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 1;
         }
 
         .ai-checker-box {
@@ -240,7 +239,7 @@
         }
 
         .hold-btn {
-            background: linear-gradient(90deg, #404040 0%, #2d2d2d 100%);
+            background: linear-gradient(90deg, #2d2d2d 0%, #404040 100%);
             color: #fff;
             border: none;
             border-radius: 999px;
@@ -259,8 +258,7 @@
             top: 0;
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #e2e8f0 0%, #94a3b8 100%);
-            opacity: 0.2;
+            background: linear-gradient(90deg, #404040 0%, #2d2d2d 100%);
             transition: width 0.1s linear;
         }
     </style>
@@ -452,12 +450,6 @@
             });
         });
     </script>
-</body>
-</html>
-                </div>
-            </div>
-        </div>
-    </div>
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
@@ -528,50 +520,96 @@
         // Start animation sequence
         window.addEventListener('load', animateIntro);
     </script>
-</body>
-</html>
-            tl.to('.content-wrapper', {
-                opacity: 1,
-                duration: 1,
-                ease: "power2.inOut"
-            })
-            .to('.content-wrapper > *', {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: "power2.out"
-            }, "-=0.5");
+    <script>
+        const overlay = document.getElementById('ai-checker-overlay');
+        const holdBtn = document.getElementById('holdBtn');
+        const progressBar = document.getElementById('progressBar');
+        const loadingScreen = document.getElementById('loading-screen');
+        const resumeContent = document.getElementById('resume-content');
+        let progressInterval;
+        let heldTime = 0;
+        const holdDuration = 1500; // 1.5 seconds
+        let isVerifying = false;
+
+        // Initial setup
+        gsap.set('body', { backgroundColor: '#000' });
+        gsap.set('#loading-screen', { display: 'none' });
+        gsap.set('.content-wrapper', { opacity: 0 });
+
+        function resetProgress() {
+            if (isVerifying) return;
+            heldTime = 0;
+            progressBar.style.width = '0%';
+            holdBtn.style.transform = 'scale(1)';
+            clearInterval(progressInterval);
         }
 
-        // Start loading animation
-        animateLoading();
-    </script>
-</body>
-</html>
+        function startHold(e) {
+            e.preventDefault();
+            if (isVerifying) return;
+            
+            resetProgress();
             holdBtn.style.transform = 'scale(0.98)';
             
             progressInterval = setInterval(() => {
                 heldTime += 20;
                 let percent = Math.min(heldTime / holdDuration, 1) * 100;
-                progressBar.style.width = percent + '%';
+                progressBar.style.width = `${percent}%`;
                 
                 if (heldTime >= holdDuration) {
                     isVerifying = true;
                     clearInterval(progressInterval);
                     
-                    gsap.to(overlay, {
-                        opacity: 0,
-                        duration: 0.8,
-                        ease: "power2.inOut",
-                        onComplete: () => {
-                            overlay.style.display = 'none';
-                            resumeContent.style.visibility = 'visible';
-                            animateEntrance();
-                        }
-                    });
+                    // Transition sequence
+                    gsap.timeline()
+                        .to(overlay, {
+                            opacity: 0,
+                            duration: 0.8,
+                            ease: "power2.inOut",
+                            onComplete: () => {
+                                overlay.style.display = 'none';
+                                loadingScreen.style.display = 'flex';
+                            }
+                        })
+                        .to(loadingScreen, {
+                            opacity: 1,
+                            duration: 0.5,
+                            onComplete: startLoadingAnimation
+                        });
                 }
             }, 20);
+        }
+
+        function startLoadingAnimation() {
+            const tl = gsap.timeline();
+            
+            tl.to('.centered-name', {
+                opacity: 1,
+                duration: 1,
+                ease: "power2.out"
+            })
+            .to('.loading-bar', {
+                opacity: 1,
+                duration: 0.5
+            })
+            .to('.loading-bar-fill', {
+                width: "100%",
+                duration: 1.5,
+                ease: "power1.inOut"
+            })
+            .to(loadingScreen, {
+                opacity: 0,
+                duration: 0.8,
+                onComplete: () => {
+                    loadingScreen.style.display = 'none';
+                    resumeContent.style.visibility = 'visible';
+                }
+            })
+            .to('.content-wrapper', {
+                opacity: 1,
+                duration: 1,
+                ease: "power2.out"
+            });
         }
 
         // Event Listeners
@@ -581,37 +619,6 @@
         holdBtn.addEventListener('mouseleave', resetProgress);
         holdBtn.addEventListener('touchend', resetProgress);
         holdBtn.addEventListener('touchcancel', resetProgress);
-    </script>
-</body>
-</html>
-            
-            resetProgress();
-            holdBtn.style.transform = 'scale(0.98)';
-            
-            progressInterval = setInterval(() => {
-                heldTime += 20;
-                let percent = Math.min(heldTime / holdDuration, 1) * 100;
-                progressBar.style.width = percent + '%';
-                
-                if (heldTime >= holdDuration) {
-                    isVerifying = true;
-                    clearInterval(progressInterval);
-                    
-                    gsap.to(overlay, {
-                        opacity: 0,
-                        duration: 0.8,
-                        ease: "power2.inOut",
-                        onComplete: () => {
-                            overlay.style.display = 'none';
-                            resumeContent.style.visibility = 'visible';
-                            animateEntrance();
-                        }
-                    });
-                }
-            }, 20);
-        }
-
-        // ...existing event listeners...
     </script>
 </body>
 </html>
