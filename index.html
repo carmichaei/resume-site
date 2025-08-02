@@ -375,7 +375,7 @@
         const progressBar = document.getElementById('progressBar');
         const resumeContent = document.getElementById('resume-content');
         let progressInterval, heldTime = 0;
-        const holdDuration = 2000; // ms
+        const holdDuration = 1500; // Changed to 1.5 seconds
         let isVerifying = false;
 
         function resetProgress() {
@@ -385,6 +385,13 @@
             holdBtn.style.transform = 'scale(1)';
             clearInterval(progressInterval);
         }
+
+        holdBtn.addEventListener('mousedown', startHold);
+        holdBtn.addEventListener('touchstart', startHold);
+        holdBtn.addEventListener('mouseup', resetProgress);
+        holdBtn.addEventListener('mouseleave', resetProgress);
+        holdBtn.addEventListener('touchend', resetProgress);
+        holdBtn.addEventListener('touchcancel', resetProgress);
 
         function startHold(e) {
             e.preventDefault();
@@ -422,11 +429,6 @@
                 }
             }, 50);
         }
-
-        function stopHold(e) {
-            if (!isVerifying) {
-                holdBtn.style.transform = 'scale(1)';
-                if
     </script>
 </body>
 </html>
