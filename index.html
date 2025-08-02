@@ -376,57 +376,57 @@
         const resumeContent = document.getElementById('resume-content');
         let progressInterval, heldTime = 0;
         const holdDuration = 2000; // ms
+        let isVerifying = false;
 
         function resetProgress() {
+            if (isVerifying) return;
             heldTime = 0;
             progressBar.style.width = '0%';
+            holdBtn.style.transform = 'scale(1)';
             clearInterval(progressInterval);
         }
 
         function startHold(e) {
             e.preventDefault();
+            if (isVerifying) return;
+            
             resetProgress();
+            holdBtn.style.transform = 'scale(0.98)';
+            
             progressInterval = setInterval(() => {
                 heldTime += 50;
                 let percent = Math.min(heldTime / holdDuration, 1) * 100;
                 progressBar.style.width = percent + '%';
+                
                 if (heldTime >= holdDuration) {
+                    isVerifying = true;
                     clearInterval(progressInterval);
+                    holdBtn.style.transform = 'scale(1.02)';
+                    
+                    // Success animation sequence
+                    overlay.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
                     setTimeout(() => {
                         overlay.classList.add('hidden');
                         setTimeout(() => {
                             overlay.style.display = 'none';
                             resumeContent.style.visibility = 'visible';
-                        }, 700);
+                            resumeContent.style.opacity = '0';
+                            resumeContent.style.transform = 'translateY(20px)';
+                            requestAnimationFrame(() => {
+                                resumeContent.style.transition = 'opacity 0.8s, transform 0.8s';
+                                resumeContent.style.opacity = '1';
+                                resumeContent.style.transform = 'translateY(0)';
+                            });
+                        }, 800);
                     }, 200);
                 }
             }, 50);
         }
 
         function stopHold(e) {
-            if (heldTime < holdDuration) resetProgress();
-        }
-
-        holdBtn.addEventListener('mousedown', startHold);
-        holdBtn.addEventListener('touchstart', startHold);
-
-        holdBtn.addEventListener('mouseup', stopHold);
-        holdBtn.addEventListener('mouseleave', stopHold);
-        holdBtn.addEventListener('touchend', stopHold);
-        holdBtn.addEventListener('touchcancel', stopHold);
-
-        // Prevent scrolling while overlay is active
-        document.body.style.overflow = 'hidden';
-        overlay.addEventListener('transitionend', () => {
-            if (overlay.classList.contains('hidden')) {
-                document.body.style.overflow = '';
-            }
-        });
-
-        // Hide resume content until check passes
-        window.onload = () => {
-            resumeContent.style.visibility = 'hidden';
-        };
+            if (!isVerifying) {
+                holdBtn.style.transform = 'scale(1)';
+                if
     </script>
 </body>
 </html>
