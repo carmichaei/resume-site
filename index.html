@@ -161,83 +161,8 @@
             font-weight: 600;
             text-align: right;
         }
-        /* AI Checker Overlay Styles */
-        #ai-checker-overlay {
-            position: fixed;
-            z-index: 9999;
-            inset: 0;
-            background: linear-gradient(120deg, #111111 0%, #1e1e1e 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.6s cubic-bezier(.4,0,.2,1);
-        }
-        .ai-checker-box {
-            background: rgba(30, 30, 30, 0.95);
-            color: #e2e8f0;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            min-width: 320px;
-            animation: fadeIn 1s cubic-bezier(.4,0,.2,1);
-        }
-        .ai-checker-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #e2e8f0;
-            margin-bottom: 1.2rem;
-        }
-        .ai-checker-desc {
-            color: #e2e8f0; /* Changed from #334155 to white */
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
-        }
-        .hold-btn-container {
-            position: relative;
-            display: inline-block;
-        }
-        .hold-btn {
-            background: linear-gradient(90deg, #404040 0%, #2d2d2d 100%);
-            color: #fff;
-            border: none;
-            border-radius: 999px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            padding: 0.9rem 2.5rem;
-            cursor: pointer;
-            outline: none;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(99,102,241,0.13);
-            transition: background 0.2s;
-        }
-        .hold-btn:active {
-            background: linear-gradient(90deg, #2d2d2d 0%, #404040 100%);
-        }
-        .progress-bar-bg {
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 100%;
-            background: rgba(0,0,0,0.07);
-            border-radius: 999px;
-            z-index: 1;
-        }
-        .progress-bar-fill {
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 0%;
-            background: linear-gradient(90deg, #2d2d2d 0%, #404040 100%);
-            border-radius: 999px;
-            z-index: 2;
-            transition: width 0.1s;
-        }
-        .hold-btn span {
-            position: relative;
-            z-index: 3;
-        }
-        /* Update animation styles */
-        #intro-sequence {
+        /* Loading Screen Styles */
+        #loading-screen {
             position: fixed;
             inset: 0;
             background: #000;
@@ -248,18 +173,17 @@
             flex-direction: column;
         }
 
-        #intro-name {
+        .centered-name {
             font-size: clamp(2rem, 8vw, 4rem);
             font-weight: 800;
-            color: #fff;
-            opacity: 0;
             text-align: center;
-            line-height: 1.2;
+            opacity: 0;
+            color: #fff;
             margin-bottom: 2rem;
         }
 
-        #progress-container {
-            width: min(80vw, 300px);
+        .loading-bar {
+            width: 200px;
             height: 4px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 2px;
@@ -267,24 +191,98 @@
             opacity: 0;
         }
 
-        #progress-bar {
-            width: 0%;
+        .loading-bar-fill {
+            width: 0;
             height: 100%;
             background: #fff;
-            transform-origin: left;
+            transition: width 0.5s ease;
         }
 
         .content-wrapper {
             opacity: 0;
-            visibility: hidden;
+            transform: translateY(20px);
+        }
+        /* AI Checker Styles */
+        #ai-checker-overlay {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .ai-checker-box {
+            background: rgba(37, 37, 37, 0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .ai-checker-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #e2e8f0 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ai-checker-desc {
+            color: #e2e8f0;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .hold-btn {
+            background: linear-gradient(90deg, #404040 0%, #2d2d2d 100%);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 1rem 3rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .progress-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #e2e8f0 0%, #94a3b8 100%);
+            opacity: 0.2;
+            transition: width 0.1s linear;
         }
     </style>
 </head>
 <body>
-    <div id="intro-sequence">
-        <h1 id="intro-name">Connor Sumpter Carmichael</h1>
-        <div id="progress-container">
-            <div id="progress-bar"></div>
+    <div id="ai-checker-overlay">
+        <div class="ai-checker-box">
+            <div class="ai-checker-title">AI Verification</div>
+            <div class="ai-checker-desc">
+                Hold the button for 1.5 seconds to verify you're human
+            </div>
+            <button class="hold-btn" id="holdBtn">
+                <div class="progress-bar" id="progressBar"></div>
+                <span>Hold to Verify</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="loading-screen" style="display: none;">
+        <h1 class="centered-name">Connor Sumpter Carmichael</h1>
+        <div class="loading-bar">
+            <div class="loading-bar-fill"></div>
         </div>
     </div>
 
@@ -381,6 +379,81 @@
                 <div class="quote-block">
                     “Connor thrives unsupervised, has an impressive work ethic, and his professionalism is well-suited for any team!”
                     <span class="quote-author">- COL Dickie Vest, Brigade Commander</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            const centeredName = document.querySelector('.centered-name');
+            const loadingBar = document.querySelector('.loading-bar');
+            const loadingBarFill = document.querySelector('.loading-bar-fill');
+            const contentWrapper = document.querySelector('.content-wrapper');
+
+            // Initial animation sequence
+            gsap.timeline()
+                // Fade in centered name
+                .to(centeredName, {
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power2.out"
+                })
+                // Show loading bar
+                .to(loadingBar, {
+                    opacity: 1,
+                    duration: 0.5
+                })
+                // Fill loading bar
+                .to(loadingBarFill, {
+                    width: "100%",
+                    duration: 1.5,
+                    ease: "power1.inOut"
+                })
+                // Fade out loading screen
+                .to(loadingScreen, {
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.inOut",
+                    onComplete: () => {
+                        loadingScreen.style.display = 'none';
+                    }
+                })
+                // Show content
+                .to(contentWrapper, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out"
+                })
+                // Animate sections
+                .from('section', {
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.8,
+                    stagger: 0.15,
+                    ease: "power2.out"
+                }, "-=0.5");
+
+            // Add scroll animations
+            gsap.utils.toArray('section').forEach(section => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: "top 80%",
+                    onEnter: () => {
+                        gsap.to(section, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
                 </div>
             </div>
         </div>
