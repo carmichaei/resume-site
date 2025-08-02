@@ -186,7 +186,7 @@
             margin-bottom: 1.2rem;
         }
         .ai-checker-desc {
-            color: #334155;
+            color: #e2e8f0; /* Changed from #334155 to white */
             margin-bottom: 2rem;
             font-size: 1.05rem;
         }
@@ -233,6 +233,33 @@
             position: relative;
             z-index: 3;
         }
+        /* Add new animation classes */
+        .name-centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .name-final {
+            position: relative;
+            top: 0;
+            left: 0;
+            transform: none;
+        }
+
+        .content-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .content-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         @media (max-width: 700px) {
             .glass-card {
                 padding: 1.2rem 0.5rem;
@@ -360,8 +387,9 @@
         const holdBtn = document.getElementById('holdBtn');
         const progressBar = document.getElementById('progressBar');
         const resumeContent = document.getElementById('resume-content');
+        const nameElement = document.querySelector('.name');
         let progressInterval, heldTime = 0;
-        const holdDuration = 2000; // Changed to 2 seconds
+        const holdDuration = 1000; // Changed to 1 second
         let isVerifying = false;
 
         function resetProgress() {
@@ -379,6 +407,25 @@
         holdBtn.addEventListener('touchend', resetProgress);
         holdBtn.addEventListener('touchcancel', resetProgress);
 
+        function showContent() {
+            // First, show and center the name
+            nameElement.classList.add('name-centered');
+            
+            setTimeout(() => {
+                // Move name to final position
+                nameElement.classList.add('name-final');
+                
+                // Show rest of content with delay
+                const contentElements = document.querySelectorAll('.glass-card > *:not(.name)');
+                contentElements.forEach((el, index) => {
+                    el.classList.add('content-hidden');
+                    setTimeout(() => {
+                        el.classList.add('content-visible');
+                    }, 800 + (index * 100)); // Stagger the animations
+                });
+            }, 1000);
+        }
+
         function startHold(e) {
             e.preventDefault();
             if (isVerifying) return;
@@ -387,7 +434,7 @@
             holdBtn.style.transform = 'scale(0.98)';
             
             progressInterval = setInterval(() => {
-                heldTime += 50;
+                heldTime += 20; // Smaller increment for smoother progress
                 let percent = Math.min(heldTime / holdDuration, 1) * 100;
                 progressBar.style.width = percent + '%';
                 
@@ -397,37 +444,16 @@
                     holdBtn.style.transform = 'scale(1.02)';
                     
                     // Success animation sequence
-                    overlay.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                    overlay.style.transition = 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                    overlay.classList.add('hidden');
+                    
                     setTimeout(() => {
-                        overlay.classList.add('hidden');
-                        setTimeout(() => {
-                            overlay.style.display = 'none';
-                            resumeContent.style.visibility = 'visible';
-                            resumeContent.style.opacity = '0';
-                            resumeContent.style.transform = 'translateY(20px)';
-                            requestAnimationFrame(() => {
-                                resumeContent.style.transition = 'opacity 0.8s, transform 0.8s';
-                                resumeContent.style.opacity = '1';
-                                resumeContent.style.transform = 'translateY(0)';
-                            });
-                        }, 800);
-                    }, 200);
+                        overlay.style.display = 'none';
+                        resumeContent.style.visibility = 'visible';
+                        showContent();
+                    }, 600);
                 }
-            }, 50);
-        }
-    </script>
-</body>
-</html>
-        }
-    </script>
-</body>
-</html>
-                                resumeContent.style.transform = 'translateY(0)';
-                            });
-                        }, 800);
-                    }, 200);
-                }
-            }, 50);
+            }, 20); // Smaller interval for smoother progress
         }
     </script>
 </body>
