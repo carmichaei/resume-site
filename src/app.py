@@ -1,9 +1,12 @@
-from flask import Flask, render_template
+from flask import Flask, jsonify
+from flask_cors import CORS
+import os
 
 app = Flask(__name__)
+CORS(app, origins=["https://resume.connorcarmichael.org"])
 
-@app.route('/')
-def home():
+@app.route('/api/resume')
+def get_resume():
     resume = {
         "name": "Connor Sumpter Carmichael",
         "title": "Operational Leader, Army Medical Service Corps Officer, Data Scientist, & App Developer",
@@ -81,7 +84,8 @@ def home():
         "quote": "”Connor thrives unsupervised, has an impressive work ethic, and his professionalism is well-suited for any team!”",
         "quote_author": "COL Dickie Vest, Brigade Commander"
     }
-    return render_template('index.html', resume=resume)
+    return jsonify(resume)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)

@@ -1,22 +1,18 @@
-# Connor Carmichael Resume Website
+# Connor Carmichael's Resume Website
 
-A simple, modern resume website you can host on GitHub Pages.
+A Flask-based API serving my professional resume data.
 
-## How to Deploy
+## Setup
+1. Clone repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run locally: `python src/app.py`
 
-1. **Push to GitHub**:  
-   Create a new repository (e.g., `resume-website`) and push these files.
+## Deployment
+This site is automatically deployed to Heroku via GitHub Actions.
 
-2. **Enable GitHub Pages**:  
-   Go to your repo Settings → Pages → Source: select `main` branch and `/root`.
+Required environment variables:
+- `HEROKU_API_KEY`
+- `HEROKU_APP_NAME`
+- `HEROKU_EMAIL`
 
-3. **Custom Domain**:  
-   - Add `resume.connorcarmichael.org` as your custom domain in the GitHub Pages settings.
-   - Update your DNS provider to add a CNAME record pointing `resume.connorcarmichael.org` to `your-github-username.github.io`.
-
-4. **Edit Content**:  
-   Update `index.html` with your real information.
-
-## License
-
-MIT
+Set these in your GitHub repository secrets.
