@@ -237,7 +237,7 @@
             z-index: 3;
         }
         /* Update animation styles */
-        #initial-screen {
+        #intro-sequence {
             position: fixed;
             inset: 0;
             background: #000;
@@ -245,208 +245,223 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
 
-        #initial-name {
-            font-size: 4rem;
+        #intro-name {
+            font-size: clamp(2rem, 8vw, 4rem);
             font-weight: 800;
             color: #fff;
             opacity: 0;
             text-align: center;
             line-height: 1.2;
-            margin: 0;
-            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        #progress-container {
+            width: min(80vw, 300px);
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #fff;
+            transform-origin: left;
         }
 
         .content-wrapper {
             opacity: 0;
-        }
-
-        .content-wrapper > * {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        @media (max-width: 768px) {
-            #initial-name {
-                font-size: 2.5rem;
-                padding: 0 1rem;
-            }
-        }
-        @media (max-width: 700px) {
-            .glass-card {
-                padding: 1.2rem 0.5rem;
-            }
-            .exp-dates {
-                float: none;
-                display: block;
-                margin-top: 0.2rem;
-            }
+            visibility: hidden;
         }
     </style>
 </head>
 <body>
-    <div id="initial-screen">
-        <h1 id="initial-name">Connor Sumpter Carmichael</h1>
-    </div>
-    
-    <div id="ai-checker-overlay">
-        <div class="ai-checker-box">
-            <div class="ai-checker-title">AI Checker</div>
-            <div class="ai-checker-desc">
-                Please hold the button below for 2 seconds to verify you are human.
-            </div>
-            <div class="hold-btn-container">
-                <button class="hold-btn" id="holdBtn">
-                    <div class="progress-bar-bg"></div>
-                    <div class="progress-bar-fill" id="progressBar"></div>
-                    <span>Hold to Enter</span>
-                </button>
-            </div>
+    <div id="intro-sequence">
+        <h1 id="intro-name">Connor Sumpter Carmichael</h1>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
         </div>
     </div>
-    <div class="glass-card" id="resume-content" style="visibility:hidden;">
-        <div class="content-wrapper">
-            <header>
-                <div class="name">Connor Sumpter Carmichael</div>
-                <div class="title">Operational Leader, Army Medical Service Corps Officer, Data Scientist, &amp; App Developer</div>
-                <div class="about">Skilled operational leader with a knack for creating efficiencies. Quick to automate tasks and thrives on complex challenges.</div>
-                <div class="contact">
-                    <span><a href="mailto:carmichaelpfi@gmail.com">carmichaelpfi@gmail.com</a></span>
-                    <span><a href="tel:19073126672">(907) 312-6672</a></span>
-                    <span><a href="https://linkedin.com/in/ConnorCarm" target="_blank">LinkedIn</a></span>
-                    <span>Valparaiso, IN (Relocating to CO)</span>
+
+    <div class="content-wrapper">
+        <div class="glass-card" id="resume-content" style="visibility:hidden;">
+            <div class="content-wrapper">
+                <header>
+                    <div class="name">Connor Sumpter Carmichael</div>
+                    <div class="title">Operational Leader, Army Medical Service Corps Officer, Data Scientist, &amp; App Developer</div>
+                    <div class="about">Skilled operational leader with a knack for creating efficiencies. Quick to automate tasks and thrives on complex challenges.</div>
+                    <div class="contact">
+                        <span><a href="mailto:carmichaelpfi@gmail.com">carmichaelpfi@gmail.com</a></span>
+                        <span><a href="tel:19073126672">(907) 312-6672</a></span>
+                        <span><a href="https://linkedin.com/in/ConnorCarm" target="_blank">LinkedIn</a></span>
+                        <span>Valparaiso, IN (Relocating to CO)</span>
+                    </div>
+                </header>
+                <section>
+                    <h2>Education</h2>
+                    <ul>
+                        <li>Master’s of Health Administration (2021)</li>
+                        <li>Bachelor’s of Healthcare Leadership (2020)</li>
+                        <li>Minor in Chemistry</li>
+                        <li>Minor in Biology</li>
+                        <li>Minor in Military Science</li>
+                        <li>Medical Information Management Course (2024)</li>
+                        <li>CompTIA Security+ Certification</li>
+                        <li>Basic Officer Leadership Course</li>
+                        <li>Project Management Professional (PMP) In-Progress</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Notable Awards</h2>
+                    <ul class="awards">
+                        <li>Meritorious Service Medal</li>
+                        <li>National Defense Service Medal</li>
+                        <li>Global War on Terrorism Expeditionary Medal</li>
+                        <li>Norweigan Foot March Badge</li>
+                        <li>German Armed Forces Proficiency Badge</li>
+                        <li>Dean’s List & Magna Cum Laude (MS)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Experience</h2>
+                    <ul class="exp-list">
+                        <li class="exp-item">
+                            <span class="exp-role">Lead Consultant</span>
+                            <span class="exp-org">- Forvis Mazars</span>
+                            <span class="exp-dates">2021 - Current</span>
+                            <ul>
+                                <li>Identified and implemented over $75M in savings over the past 3 years - including continuous improvement initiatives in orthopedics, employee benefits, group purchasing organizations, and a variety of purchased services.</li>
+                                <li>Independently designed and automated a custom Power BI dashboard using public data to benchmark and estimate total opportunity for large organizations. Reduced the amount of time needed for calculating KPIs and peer groups by 96% (5 min → 12 sec).</li>
+                            </ul>
+                        </li>
+                        <li class="exp-item">
+                            <span class="exp-role">Aide-de-Camp</span>
+                            <span class="exp-org">- US Army</span>
+                            <span class="exp-dates">2023 - Current</span>
+                            <ul>
+                                <li>Serves as the senior Aide-de-Camp in the Army Reserve Medical Command. Provides executive support to Major General Michael Yost, Commanding General.</li>
+                                <li>Provides operational support to the Headquarters, and missions across the United States in support of Army Reserve Medical current and future operations.</li>
+                            </ul>
+                        </li>
+                        <li class="exp-item">
+                            <span class="exp-role">Chief Information Officer</span>
+                            <span class="exp-org">- US Army (Deployment)</span>
+                            <span class="exp-dates">2022</span>
+                            <ul>
+                                <li>During an overseas deployment, served as the senior CIO (three grades above my rank) for two 32-bed hospitals and 10+ dispersed clinics.</li>
+                                <li>Built and led a team of 7 to fully modernize health information systems across the area of operations, including degraded conditions in Syria and Iraq.</li>
+                                <li>Also held additional duties such as Safety Officer and Security Officer. Frequently audited practices among the clinics.</li>
+                            </ul>
+                        </li>
+                        <li class="exp-item">
+                            <span class="exp-role">Movement Officer</span>
+                            <span class="exp-org">- US Army (Real-World Exercise)</span>
+                            <span class="exp-dates">2020</span>
+                            <ul>
+                                <li>Independently managed six chinook helicopters and their crews - personnel, flight logs, and manifests - to move medical teams and logistical requirements between rural locations in Kodiak, Alaska.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Hobbies & Interests</h2>
+                    <ul class="hobbies">
+                        <li>App Development (React Native)</li>
+                        <li>Skiing & Biking</li>
+                        <li>Travel</li>
+                        <li>Graphic Design</li>
+                        <li>Real Estate Investing</li>
+                    </ul>
+                </section>
+                <div class="quote-block">
+                    “Connor thrives unsupervised, has an impressive work ethic, and his professionalism is well-suited for any team!”
+                    <span class="quote-author">- COL Dickie Vest, Brigade Commander</span>
                 </div>
-            </header>
-            <section>
-                <h2>Education</h2>
-                <ul>
-                    <li>Master’s of Health Administration (2021)</li>
-                    <li>Bachelor’s of Healthcare Leadership (2020)</li>
-                    <li>Minor in Chemistry</li>
-                    <li>Minor in Biology</li>
-                    <li>Minor in Military Science</li>
-                    <li>Medical Information Management Course (2024)</li>
-                    <li>CompTIA Security+ Certification</li>
-                    <li>Basic Officer Leadership Course</li>
-                    <li>Project Management Professional (PMP) In-Progress</li>
-                </ul>
-            </section>
-            <section>
-                <h2>Notable Awards</h2>
-                <ul class="awards">
-                    <li>Meritorious Service Medal</li>
-                    <li>National Defense Service Medal</li>
-                    <li>Global War on Terrorism Expeditionary Medal</li>
-                    <li>Norweigan Foot March Badge</li>
-                    <li>German Armed Forces Proficiency Badge</li>
-                    <li>Dean’s List & Magna Cum Laude (MS)</li>
-                </ul>
-            </section>
-            <section>
-                <h2>Experience</h2>
-                <ul class="exp-list">
-                    <li class="exp-item">
-                        <span class="exp-role">Lead Consultant</span>
-                        <span class="exp-org">- Forvis Mazars</span>
-                        <span class="exp-dates">2021 - Current</span>
-                        <ul>
-                            <li>Identified and implemented over $75M in savings over the past 3 years - including continuous improvement initiatives in orthopedics, employee benefits, group purchasing organizations, and a variety of purchased services.</li>
-                            <li>Independently designed and automated a custom Power BI dashboard using public data to benchmark and estimate total opportunity for large organizations. Reduced the amount of time needed for calculating KPIs and peer groups by 96% (5 min → 12 sec).</li>
-                        </ul>
-                    </li>
-                    <li class="exp-item">
-                        <span class="exp-role">Aide-de-Camp</span>
-                        <span class="exp-org">- US Army</span>
-                        <span class="exp-dates">2023 - Current</span>
-                        <ul>
-                            <li>Serves as the senior Aide-de-Camp in the Army Reserve Medical Command. Provides executive support to Major General Michael Yost, Commanding General.</li>
-                            <li>Provides operational support to the Headquarters, and missions across the United States in support of Army Reserve Medical current and future operations.</li>
-                        </ul>
-                    </li>
-                    <li class="exp-item">
-                        <span class="exp-role">Chief Information Officer</span>
-                        <span class="exp-org">- US Army (Deployment)</span>
-                        <span class="exp-dates">2022</span>
-                        <ul>
-                            <li>During an overseas deployment, served as the senior CIO (three grades above my rank) for two 32-bed hospitals and 10+ dispersed clinics.</li>
-                            <li>Built and led a team of 7 to fully modernize health information systems across the area of operations, including degraded conditions in Syria and Iraq.</li>
-                            <li>Also held additional duties such as Safety Officer and Security Officer. Frequently audited practices among the clinics.</li>
-                        </ul>
-                    </li>
-                    <li class="exp-item">
-                        <span class="exp-role">Movement Officer</span>
-                        <span class="exp-org">- US Army (Real-World Exercise)</span>
-                        <span class="exp-dates">2020</span>
-                        <ul>
-                            <li>Independently managed six chinook helicopters and their crews - personnel, flight logs, and manifests - to move medical teams and logistical requirements between rural locations in Kodiak, Alaska.</li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
-            <section>
-                <h2>Hobbies & Interests</h2>
-                <ul class="hobbies">
-                    <li>App Development (React Native)</li>
-                    <li>Skiing & Biking</li>
-                    <li>Travel</li>
-                    <li>Graphic Design</li>
-                    <li>Real Estate Investing</li>
-                </ul>
-            </section>
-            <div class="quote-block">
-                “Connor thrives unsupervised, has an impressive work ethic, and his professionalism is well-suited for any team!”
-                <span class="quote-author">- COL Dickie Vest, Brigade Commander</span>
             </div>
         </div>
     </div>
     <script>
         gsap.registerPlugin(ScrollTrigger);
-        
-        // Initial Setup
+
+        // Initial setup
         gsap.set('body', { backgroundColor: '#000' });
-        gsap.set('.glass-card', { opacity: 0 });
-        gsap.set('.content-wrapper > *', { opacity: 0, y: 20 });
-
-        const overlay = document.getElementById('ai-checker-overlay');
-        const holdBtn = document.getElementById('holdBtn');
-        const progressBar = document.getElementById('progressBar');
-        const resumeContent = document.getElementById('resume-content');
-        const initialScreen = document.getElementById('initial-screen');
-        const initialName = document.getElementById('initial-name');
-        let progressInterval, heldTime = 0;
-        const holdDuration = 1000;
-        let isVerifying = false;
-
-        function animateEntrance() {
+        
+        function animateIntro() {
             const tl = gsap.timeline();
 
-            // Main animation sequence
-            tl.to(initialName, {
+            // Fade in name
+            tl.to('#intro-name', {
                 opacity: 1,
-                duration: 2,
+                duration: 1.5,
                 ease: "power2.out"
             })
-            .to({}, { duration: 0.5 })
-            .to(initialName, {
-                y: -100,
-                scale: 0.8,
-                duration: 1.5,
-                ease: "power2.inOut"
+            // Show and animate progress bar
+            .to('#progress-container', {
+                opacity: 1,
+                duration: 0.5
             })
-            .to(initialScreen, {
+            .to('#progress-bar', {
+                width: '100%',
+                duration: 2,
+                ease: "power1.inOut"
+            })
+            // Fade out intro sequence
+            .to('#intro-sequence', {
                 opacity: 0,
-                duration: 1,
+                duration: 0.8,
                 ease: "power2.inOut",
                 onComplete: () => {
-                    initialScreen.style.display = 'none';
+                    document.getElementById('intro-sequence').style.display = 'none';
                 }
-            }, "-=0.5")
+            })
+            // Reveal content
+            .set('.content-wrapper', { visibility: 'visible' })
             .to('.content-wrapper', {
                 opacity: 1,
                 duration: 1,
+                ease: "power2.out"
+            })
+            // Animate content sections
+            .from('section', {
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power2.out"
+            }, "-=0.5");
+
+            // Add scroll animations
+            gsap.utils.toArray('section').forEach(section => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: "top 80%",
+                    onEnter: () => {
+                        gsap.to(section, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        }
+
+        // Start animation sequence
+        window.addEventListener('load', animateIntro);
+    </script>
+</body>
+</html>
+            tl.to('.content-wrapper', {
+                opacity: 1,
+                duration: 1,
                 ease: "power2.inOut"
-            }, "-=0.8")
+            })
             .to('.content-wrapper > *', {
                 opacity: 1,
                 y: 0,
@@ -454,28 +469,13 @@
                 stagger: 0.1,
                 ease: "power2.out"
             }, "-=0.5");
-
-            // Scroll animations
-            gsap.utils.toArray('section').forEach(section => {
-                gsap.from(section, {
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        toggleActions: "play none none reverse"
-                    },
-                    opacity: 0,
-                    y: 50,
-                    duration: 1,
-                    ease: "power2.out"
-                });
-            });
         }
 
-        function startHold(e) {
-            e.preventDefault();
-            if (isVerifying) return;
-            
-            resetProgress();
+        // Start loading animation
+        animateLoading();
+    </script>
+</body>
+</html>
             holdBtn.style.transform = 'scale(0.98)';
             
             progressInterval = setInterval(() => {
