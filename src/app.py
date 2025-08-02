@@ -4,33 +4,46 @@ from flask_caching import Cache
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import os
-import logging
 from datetime import datetime
+import logging
+from typing import Dict, Any
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-CORS(app, origins=["https://resume.connorcarmichael.org"])
 
-# Configure caching
-cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+# Make CORS configurable
+ALLOWED_ORIGINS = os.environ.get('ALLOWED_ORIGINS', 'https://resume.connorcarmichael.org').split(',')
+CORS(app, origins=ALLOWED_ORIGINS)
+
+# Configure caching with error handling
+try:
+    cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+except Exception as e:
+    logger.error(f"Cache initialization failed: {e}")
+    cache = None
 
 # Configure rate limiting
 limiter = Limiter(
     app=app,
     key_func=get_remote_address,
-    default_limits=["200 per day", "50 per hour"]
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri=os.environ.get('RATE_LIMIT_STORAGE', 'memory://')
 )
 
 @app.errorhandler(404)
-def not_found(error):
-    return jsonify({'error': 'Not found'}), 404
+def not_found(error: Any) -> tuple[Dict, int]:
+    return jsonify({'error': 'Not found', 'status': 404}), 404
 
 @app.errorhandler(429)
-def ratelimit_handler(e):
-    return jsonify({'error': 'Rate limit exceeded'}), 429
+def ratelimit_handler(e: Any) -> tuple[Dict, int]:
+    return jsonify({
+        'error': 'Rate limit exceeded',
+        'status': 429,
+        'retry_after': e.description
+    }), 429
 
 @app.route('/health')
 def health_check():
