@@ -8,110 +8,129 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
-        body {
-            min-height: 100vh;
-            margin: 0;
-            background: #1a1a1a;
-            font-family: 'Inter', sans-serif;
-            color: #e2e8f0;
+        :root {
+            --bg: #121212;
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --primary: #4f9cf9;
+            --accent: #ff6fb5;
+            --text: #e0e0e0;
+            --muted: #888888;
+            --shadow: rgba(0, 0, 0, 0.5);
         }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+        }
+        /* Glass Card */
         .glass-card {
-            background: rgba(37, 37, 37, 0.7);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 2.5rem;
-            max-width: 1000px;
-            width: 100%;
+            max-width: 900px;
             margin: 2rem auto;
-            opacity: 0; /* Start hidden, animate in */
+            padding: 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px var(--shadow);
+            opacity: 0; /* Animated in by GSAP */
+        }
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
         }
         .name {
-            font-size: 2.4rem;
+            font-size: clamp(2rem, 6vw, 3rem);
             font-weight: 700;
-            background: linear-gradient(90deg, #0ea5e9 30%, #818cf8 100%);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin-bottom: 0.5rem;
         }
         .title {
-            font-size: 1.1rem;
-            color: #6366f1;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 1rem;
         }
         .about {
-            font-size: 1.08rem;
-            color: #374151;
-            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
         }
         .contact {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1.2rem;
-            font-size: 0.98rem;
-            margin-bottom: 1.5rem;
+            gap: 1rem;
+            font-size: 0.95rem;
         }
         .contact a {
-            color: #0ea5e9;
-            text-decoration: none;
-            transition: color 0.2s;
+            color: var(--primary);
+            transition: color 0.3s;
         }
         .contact a:hover {
-            color: #6366f1;
+            color: var(--accent);
         }
+        /* Sections */
         section {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         h2 {
-            font-size: 1.2rem;
-            color: #6366f1;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.5px;
-            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 0.25rem;
         }
-        ul, .exp-list {
-            padding-left: 1.2rem;
+        ul {
             margin: 0;
+            padding-left: 1.5rem;
         }
-        li {
-            margin-bottom: 0.3rem;
-            line-height: 1.5;
-        }
+        /* Experience List */
         .exp-list {
             list-style: none;
             padding: 0;
         }
         .exp-item {
-            margin-bottom: 1.1rem;
-            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
-            background: rgba(37, 37, 37, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 2px 8px rgba(99,102,241,0.06);
-            transition: box-shadow 0.2s, transform 0.2s;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .exp-item:hover {
-            box-shadow: 0 6px 24px rgba(99,102,241,0.13);
-            transform: translateY(-2px) scale(1.01);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px var(--shadow);
         }
         .exp-role {
-            font-weight: 600;
-            color: #0ea5e9;
             font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--primary);
         }
         .exp-org {
-            color: #64748b;
-            font-size: 0.98rem;
             margin-left: 0.5rem;
+            color: var(--muted);
+            font-size: 0.95rem;
         }
         .exp-dates {
             float: right;
-            color: #94a3b8;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            color: var(--muted);
             font-weight: 500;
         }
+        /* Badges */
         .awards, .hobbies {
             display: flex;
             flex-wrap: wrap;
@@ -120,48 +139,44 @@
             padding: 0;
         }
         .awards li, .hobbies li {
-            background: rgba(255, 255, 255, 0.1);
-            color: #e2e8f0;
-            border-radius: 6px;
-            padding: 0.3rem 0.9rem;
-            font-size: 0.97rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
         }
+        /* Quote */
         .quote-block {
-            margin: 2rem 0 0 0;
-            padding: 1.2rem 1.5rem;
-            background: rgba(37, 37, 37, 0.9);
-            border-left: 5px solid #0ea5e9;
+            position: relative;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--primary);
             border-radius: 0 16px 16px 0;
             font-style: italic;
-            color: #e2e8f0;
-            font-size: 1.08rem;
-            box-shadow: 0 2px 8px rgba(99,102,241,0.06);
-            position: relative;
         }
         .quote-block::before {
             content: "“";
-            font-size: 2.5rem;
-            color: #6366f1;
             position: absolute;
-            left: 12px;
-            top: 2px;
+            left: 10px;
+            top: -10px;
+            font-size: 3rem;
+            color: var(--primary);
             opacity: 0.2;
         }
         .quote-author {
             display: block;
-            margin-top: 0.7rem;
-            color: #6366f1;
-            font-size: 0.98rem;
-            font-weight: 600;
             text-align: right;
+            margin-top: 1rem;
+            color: var(--accent);
+            font-weight: 500;
         }
+        /* Loading Screen */
         #loading-screen {
             position: fixed;
             inset: 0;
-            background: #000;
+            background: var(--bg);
             z-index: 10000;
-            display: flex;
+            display: none; /* Shown by JS */
             align-items: center;
             justify-content: center;
             flex-direction: column;
@@ -169,10 +184,9 @@
         .centered-name {
             font-size: clamp(2rem, 8vw, 4rem);
             font-weight: 800;
-            text-align: center;
-            opacity: 0;
-            color: #fff;
             margin-bottom: 2rem;
+            color: var(--text);
+            opacity: 0; /* Animated in */
         }
         .loading-bar {
             width: 200px;
@@ -180,67 +194,70 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 2px;
             overflow: hidden;
-            opacity: 0;
+            opacity: 0; /* Animated in */
             margin: 0 auto;
         }
         .loading-bar-fill {
             width: 0%;
             height: 100%;
-            background: #fff;
+            background: var(--primary);
             transition: width 0.1s linear;
         }
-        /* AI Checker Styles */
+        /* AI Checker */
         #ai-checker-overlay {
             position: fixed;
             inset: 0;
-            background: #000;
+            background: rgba(0, 0, 0, 0.85);
             z-index: 10000;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .ai-checker-box {
-            background: rgba(37, 37, 37, 0.95);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 2.5rem;
-            text-align: center;
             max-width: 400px;
             width: 90%;
+            text-align: center;
         }
         .ai-checker-title {
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, #e2e8f0 30%, #94a3b8 100%);
+            background: linear-gradient(90deg, var(--text), var(--muted));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .ai-checker-desc {
-            color: #e2e8f0;
-            margin-bottom: 2rem;
             font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 2rem;
             line-height: 1.5;
         }
         .hold-btn {
-            background: linear-gradient(90deg, #2d2d2d 0%, #404040 100%);
-            color: #fff;
-            border: none;
-            border-radius: 999px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            padding: 1rem 3rem;
-            cursor: pointer;
             position: relative;
             overflow: hidden;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 999px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
             transition: transform 0.2s;
+        }
+        .hold-btn:hover {
+            transform: scale(1.02);
         }
         .progress-bar {
             position: absolute;
-            left: 0;
             top: 0;
+            left: 0;
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #404040 0%, #2d2d2d 100%);
+            background: var(--primary);
             z-index: 1;
             transition: width 0.1s linear;
         }
@@ -255,7 +272,7 @@
         <div class="ai-checker-box">
             <div class="ai-checker-title">AI Verification</div>
             <div class="ai-checker-desc">
-                Hold the button for 1.5 seconds to verify you're human
+                Hold the button to verify you're human
             </div>
             <button class="hold-btn" id="holdBtn">
                 <div class="progress-bar" id="progressBar"></div>
@@ -263,13 +280,13 @@
             </button>
         </div>
     </div>
-    <div id="loading-screen" style="display: none;">
+    <div id="loading-screen">
         <h1 class="centered-name">Connor Sumpter Carmichael</h1>
         <div class="loading-bar">
             <div class="loading-bar-fill"></div>
         </div>
     </div>
-    <div class="glass-card" id="resume-content" style="opacity:0;">
+    <div class="glass-card" id="resume-content">
         <header>
             <div class="name">Connor Sumpter Carmichael</div>
             <div class="title">Operational Leader, Army Medical Service Corps Officer, Data Scientist, &amp; App Developer</div>
@@ -281,6 +298,7 @@
                 <span>Valparaiso, IN (Relocating to CO)</span>
             </div>
         </header>
+        <!-- Education -->
         <section>
             <h2>Education</h2>
             <ul>
@@ -295,36 +313,37 @@
                 <li>Project Management Professional (PMP) In-Progress</li>
             </ul>
         </section>
+        <!-- Awards -->
         <section>
             <h2>Notable Awards</h2>
             <ul class="awards">
                 <li>Meritorious Service Medal</li>
                 <li>National Defense Service Medal</li>
                 <li>Global War on Terrorism Expeditionary Medal</li>
-                <li>Norweigan Foot March Badge</li>
+                <li>Norwegian Foot March Badge</li>
                 <li>German Armed Forces Proficiency Badge</li>
-                <li>Dean’s List & Magna Cum Laude (MS)</li>
+                <li>Dean’s List &amp; Magna Cum Laude (MS)</li>
             </ul>
         </section>
+        <!-- Experience -->
         <section>
             <h2>Experience</h2>
             <ul class="exp-list">
                 <li class="exp-item">
                     <span class="exp-role">Lead Consultant</span>
-                    <span class="exp-org">- Forvis Mazars</span>
-                    <span class="exp-dates">2021 - Current</span>
+                    <span class="exp-org">- FORVIS Mazars</span>
+                    <span class="exp-dates">2021 – Current</span>
                     <ul>
-                        <li>Identified and implemented over $75M in savings over the past 3 years - including continuous improvement initiatives in orthopedics, employee benefits, group purchasing organizations, and a variety of purchased services.</li>
-                        <li>Independently designed and automated a custom Power BI dashboard using public data to benchmark and estimate total opportunity for large organizations. Reduced the amount of time needed for calculating KPIs and peer groups by 96% (5 min → 12 sec).</li>
+                        <li>Identified and implemented over $75M in savings across orthopedic, benefits, GPO and purchased-services initiatives.</li>
+                        <li>Built a custom Power BI dashboard to benchmark large systems, reducing KPI calculation time from 5 min to 12 sec.</li>
                     </ul>
                 </li>
                 <li class="exp-item">
                     <span class="exp-role">Aide-de-Camp</span>
                     <span class="exp-org">- US Army</span>
-                    <span class="exp-dates">2023 - Current</span>
+                    <span class="exp-dates">2023 – Current</span>
                     <ul>
-                        <li>Serves as the senior Aide-de-Camp in the Army Reserve Medical Command. Provides executive support to Major General Michael Yost, Commanding General.</li>
-                        <li>Provides operational support to the Headquarters, and missions across the United States in support of Army Reserve Medical current and future operations.</li>
+                        <li>Senior aide for MG Michael Yost, supporting Army Reserve Medical Command operations nationwide.</li>
                     </ul>
                 </li>
                 <li class="exp-item">
@@ -332,34 +351,35 @@
                     <span class="exp-org">- US Army (Deployment)</span>
                     <span class="exp-dates">2022</span>
                     <ul>
-                        <li>During an overseas deployment, served as the senior CIO (three grades above my rank) for two 32-bed hospitals and 10+ dispersed clinics.</li>
-                        <li>Built and led a team of 7 to fully modernize health information systems across the area of operations, including degraded conditions in Syria and Iraq.</li>
-                        <li>Also held additional duties such as Safety Officer and Security Officer. Frequently audited practices among the clinics.</li>
+                        <li>Led IT modernization for two 32-bed hospitals and 10+ clinics under combat conditions in Syria and Iraq.</li>
+                        <li>Also served as Safety and Security Officer, auditing field practices.</li>
                     </ul>
                 </li>
                 <li class="exp-item">
                     <span class="exp-role">Movement Officer</span>
-                    <span class="exp-org">- US Army (Real-World Exercise)</span>
+                    <span class="exp-org">- US Army (Exercise)</span>
                     <span class="exp-dates">2020</span>
                     <ul>
-                        <li>Independently managed six chinook helicopters and their crews - personnel, flight logs, and manifests - to move medical teams and logistical requirements between rural locations in Kodiak, Alaska.</li>
+                        <li>Managed six CH-47 Chinook helicopters—personnel, flight logs, and manifests—in Kodiak, Alaska.</li>
                     </ul>
                 </li>
             </ul>
         </section>
+        <!-- Hobbies & Interests -->
         <section>
-            <h2>Hobbies & Interests</h2>
+            <h2>Hobbies &amp; Interests</h2>
             <ul class="hobbies">
                 <li>App Development (React Native)</li>
-                <li>Skiing & Biking</li>
+                <li>Skiing &amp; Biking</li>
                 <li>Travel</li>
                 <li>Graphic Design</li>
                 <li>Real Estate Investing</li>
             </ul>
         </section>
+        <!-- Quote -->
         <div class="quote-block">
-            “Connor thrives unsupervised, has an impressive work ethic, and his professionalism is well-suited for any team!”
-            <span class="quote-author">- COL Dickie Vest, Brigade Commander</span>
+            Connor thrives unsupervised, has an impressive work ethic, and his professionalism is well-suited for any team!
+            <span class="quote-author">– COL Dickie Vest, Brigade Commander</span>
         </div>
     </div>
     <script>
@@ -370,9 +390,8 @@
         const loadingScreen = document.getElementById('loading-screen');
         const loadingBarFill = document.querySelector('.loading-bar-fill');
         const resumeContent = document.getElementById('resume-content');
-        let progressInterval;
-        let heldTime = 0;
-        const holdDuration = 1500; // 1.5 seconds
+        let progressInterval, heldTime = 0;
+        const holdDuration = 1500;
         let isVerifying = false;
 
         function resetProgress() {
@@ -390,7 +409,7 @@
             holdBtn.style.transform = 'scale(0.98)';
             progressInterval = setInterval(() => {
                 heldTime += 20;
-                let percent = Math.min(heldTime / holdDuration, 1) * 100;
+                const percent = Math.min(heldTime / holdDuration, 1) * 100;
                 progressBar.style.width = percent + '%';
                 if (heldTime >= holdDuration) {
                     isVerifying = true;
@@ -411,45 +430,24 @@
         }
 
         function startLoadingAnimation() {
-            loadingBarFill.style.width = '0%';
             gsap.set('.centered-name', {opacity: 0});
             gsap.set('.loading-bar', {opacity: 0});
             gsap.set(resumeContent, {opacity: 0});
-            // Animate name, bar, and fade in resume content
             const tl = gsap.timeline();
-            tl.to('.centered-name', {
-                opacity: 1,
-                duration: 1,
-                ease: "power2.out"
-            })
-            .to('.loading-bar', {
-                opacity: 1,
-                duration: 0.5
-            })
-            .to(loadingBarFill, {
-                width: "100%",
-                duration: 1.5,
-                ease: "power1.inOut"
-            })
-            .to(loadingScreen, {
-                opacity: 0,
-                duration: 0.8,
-                onComplete: () => {
-                    loadingScreen.style.display = 'none';
-                }
-            })
-            .to(resumeContent, {
-                opacity: 1,
-                duration: 1,
-                ease: "power2.out"
-            })
-            .from('section', {
-                opacity: 0,
-                y: 30,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: "power2.out"
-            }, "-=0.5");
+            tl.to('.centered-name', {opacity: 1, duration: 1, ease: "power2.out"})
+              .to('.loading-bar', {opacity: 1, duration: 0.5})
+              .to(loadingBarFill, {width: "100%", duration: 1.5, ease: "power1.inOut"})
+              .to(loadingScreen, {opacity: 0, duration: 0.8, onComplete: () => {
+                  loadingScreen.style.display = 'none';
+              }})
+              .to(resumeContent, {opacity: 1, duration: 1, ease: "power2.out"})
+              .from('section', {
+                  opacity: 0,
+                  y: 30,
+                  duration: 0.8,
+                  stagger: 0.15,
+                  ease: "power2.out"
+              }, "-=0.5");
         }
 
         holdBtn.addEventListener('mousedown', startHold);
@@ -459,7 +457,6 @@
         holdBtn.addEventListener('touchend', resetProgress);
         holdBtn.addEventListener('touchcancel', resetProgress);
 
-        // Register plugin
         gsap.registerPlugin(ScrollTrigger);
     </script>
 </body>
