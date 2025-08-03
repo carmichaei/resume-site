@@ -1,375 +1,463 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Connor Sumpter Carmichael – Resume</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <style>
-    :root {
-      --bg: #1c1c1e;
-      --card-bg: rgba(28, 28, 30, 0.75);
-      --text: #ffffff;
-      --secondary-text: rgba(229, 229, 234, 0.7);
-      --accent: #0a84ff;
-      --shadow-light: rgba(0, 0, 0, 0.5);
-      --shadow-strong: rgba(0, 0, 0, 0.7);
-    }
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.5;
-    }
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    a:hover {
-      color: #5ac8fa;
-    }
-    /* Vibrancy Card */
-    .glass-card {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      box-shadow:
-        0 4px 12px var(--shadow-light),
-        0 8px 24px var(--shadow-strong);
-      opacity: 0; /* GSAP will fade this in */
-    }
-    /* Header */
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .name {
-      font-size: clamp(2rem, 6vw, 3rem);
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.25rem;
-    }
-    .title {
-      font-size: 1.125rem;
-      font-weight: 500;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-    .about {
-      color: var(--secondary-text);
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .contact {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      font-size: 0.95rem;
-      color: var(--secondary-text);
-    }
-    /* Sections */
-    section {
-      margin-bottom: 2rem;
-    }
-    h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 0.75rem;
-      border-bottom: 2px solid var(--accent);
-      display: inline-block;
-      padding-bottom: 0.25rem;
-    }
-    ul {
-      margin: 0;
-      padding-left: 1.5rem;
-    }
-    /* Experience */
-    .exp-list {
-      list-style: none;
-      padding: 0;
-    }
-    .exp-item {
-      position: relative;
-      background: rgba(28, 28, 30, 0.9);
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow:
-        0 2px 6px var(--shadow-light),
-        0 4px 12px var(--shadow-strong);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .exp-item:hover {
-      transform: translateY(-2px);
-      box-shadow:
-        0 6px 12px var(--shadow-light),
-        0 8px 16px var(--shadow-strong);
-    }
-    .exp-role {
-      font-weight: 600;
-      color: var(--text);
-      font-size: 1.05rem;
-    }
-    .exp-org {
-      margin-left: 0.5rem;
-      color: var(--secondary-text);
-      font-size: 0.95rem;
-    }
-    .exp-dates {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 0.9rem;
-      color: var(--secondary-text);
-      font-weight: 500;
-    }
-    /* Badges */
-    .awards, .hobbies {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1rem;
-      list-style: none;
-      padding: 0;
-    }
-    .awards li, .hobbies li {
-      background: rgba(229, 229, 234, 0.1);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      color: var(--text);
-    }
-    /* Quote */
-    .quote-block {
-      margin-top: 3rem;
-      padding: 1.5rem;
-      background: rgba(28, 28, 30, 0.9);
-      border-left: 4px solid var(--accent);
-      border-radius: 0 12px 12px 0;
-      font-style: italic;
-      color: var(--text);
-    }
-    .quote-block::before {
-      content: "“";
-      position: absolute;
-      left: 1rem;
-      top: 0.5rem;
-      font-size: 3rem;
-      color: var(--accent);
-      opacity: 0.15;
-    }
-    .quote-author {
-      display: block;
-      text-align: right;
-      margin-top: 1rem;
-      color: #ff375f;
-      font-weight: 500;
-    }
-    /* Loading & AI Checker sections unchanged */
-    #loading-screen, #ai-checker-overlay { /* same as before */ }
-    .centered-name, .loading-bar, .loading-bar-fill,
-    .ai-checker-box, .ai-checker-title, .ai-checker-desc,
-    .hold-btn, .progress-bar { /* same as before */ }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connor Sumpter Carmichael - Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --bg: #121212;
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --primary: #4f9cf9;
+            --accent: #ff6fb5;
+            --text: #e0e0e0;
+            --muted: #888888;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+        }
+        /* Glass Card */
+        .glass-card {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px var(--shadow);
+            opacity: 0; /* Animated in by GSAP */
+        }
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .name {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .about {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+        .contact {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 0.95rem;
+        }
+        .contact a {
+            color: var(--primary);
+            transition: color 0.3s;
+        }
+        .contact a:hover {
+            color: var(--accent);
+        }
+        /* Sections */
+        section {
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 0.25rem;
+        }
+        ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+        /* Experience List */
+        .exp-list {
+            list-style: none;
+            padding: 0;
+        }
+        .exp-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .exp-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px var(--shadow);
+        }
+        .exp-role {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .exp-org {
+            margin-left: 0.5rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+        .exp-dates {
+            float: right;
+            font-size: 0.9rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        /* Badges */
+        .awards, .hobbies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            list-style: none;
+            padding: 0;
+        }
+        .awards li, .hobbies li {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        /* Quote */
+        .quote-block {
+            position: relative;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 16px 16px 0;
+            font-style: italic;
+        }
+        .quote-block::before {
+            content: "“";
+            position: absolute;
+            left: 10px;
+            top: -10px;
+            font-size: 3rem;
+            color: var(--primary);
+            opacity: 0.2;
+        }
+        .quote-author {
+            display: block;
+            text-align: right;
+            margin-top: 1rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 10000;
+            display: none; /* Shown by JS */
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .centered-name {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: var(--text);
+            opacity: 0; /* Animated in */
+        }
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            opacity: 0; /* Animated in */
+            margin: 0 auto;
+        }
+        .loading-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.1s linear;
+        }
+        /* AI Checker */
+        #ai-checker-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-checker-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .ai-checker-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--text), var(--muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .ai-checker-desc {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .hold-btn {
+            position: relative;
+            overflow: hidden;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 999px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .hold-btn:hover {
+            transform: scale(1.02);
+        }
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            z-index: 1;
+            transition: width 0.1s linear;
+        }
+        .hold-btn span {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
 </head>
 <body>
-  <div id="ai-checker-overlay">
-    <div class="ai-checker-box">
-      <div class="ai-checker-title">AI Verification</div>
-      <div class="ai-checker-desc">Hold the button to verify you're human</div>
-      <button class="hold-btn" id="holdBtn">
-        <div class="progress-bar" id="progressBar"></div>
-        <span>Hold to Verify</span>
-      </button>
+    <div id="ai-checker-overlay">
+        <div class="ai-checker-box">
+            <div class="ai-checker-title">AI Verification</div>
+            <div class="ai-checker-desc">
+                Hold the button to verify you're human
+            </div>
+            <button class="hold-btn" id="holdBtn">
+                <div class="progress-bar" id="progressBar"></div>
+                <span>Hold to Verify</span>
+            </button>
+        </div>
     </div>
-  </div>
-  <div id="loading-screen">
-    <h1 class="centered-name">Connor Sumpter Carmichael</h1>
-    <div class="loading-bar">
-      <div class="loading-bar-fill"></div>
+    <div id="loading-screen">
+        <h1 class="centered-name">Connor Sumpter Carmichael</h1>
+        <div class="loading-bar">
+            <div class="loading-bar-fill"></div>
+        </div>
     </div>
-  </div>
-  <div class="glass-card" id="resume-content">
-    <header>
-      <div class="name">Connor Sumpter Carmichael</div>
-      <div class="title">Operational Leader, Army Medical Service Corps Officer, Data Scientist, &amp; App Developer</div>
-      <div class="about">Skilled operational leader with a knack for creating efficiencies. Quick to automate tasks and thrives on complex challenges.</div>
-      <div class="contact">
-        <span><a href="mailto:carmichaelpfi@gmail.com">carmichaelpfi@gmail.com</a></span>
-        <span><a href="tel:19073126672">(907) 312-6672</a></span>
-        <span><a href="https://linkedin.com/in/ConnorCarm" target="_blank">LinkedIn</a></span>
-        <span>Valparaiso, IN (Relocating to CO)</span>
-      </div>
-    </header>
-    <section>
-      <h2>Education</h2>
-      <ul>
-        <li>Master’s of Health Administration (2021)</li>
-        <li>Bachelor’s of Healthcare Leadership (2020)</li>
-        <li>Minor in Chemistry</li>
-        <li>Minor in Biology</li>
-        <li>Minor in Military Science</li>
-        <li>Medical Information Management Course (2024)</li>
-        <li>CompTIA Security+ Certification</li>
-        <li>Basic Officer Leadership Course</li>
-        <li>Project Management Professional (PMP) In-Progress</li>
-      </ul>
-    </section>
-    <section>
-      <h2>Notable Awards</h2>
-      <ul class="awards">
-        <li>Meritorious Service Medal</li>
-        <li>National Defense Service Medal</li>
-        <li>Global War on Terrorism Expeditionary Medal</li>
-        <li>Norwegian Foot March Badge</li>
-        <li>German Armed Forces Proficiency Badge</li>
-        <li>Dean’s List &amp; Magna Cum Laude (MS)</li>
-      </ul>
-    </section>
-    <section>
-      <h2>Experience</h2>
-      <ul class="exp-list">
-        <li class="exp-item">
-          <span class="exp-role">Lead Consultant</span>
-          <span class="exp-org">– FORVIS Mazars</span>
-          <span class="exp-dates">2021 – Current</span>
-          <ul>
-            <li>Identified and implemented over $75M in savings across orthopedic, benefits, GPO, and purchased-services initiatives.</li>
-            <li>Built a custom Power BI dashboard reducing KPI calculation time from 5 min to 12 sec.</li>
-          </ul>
-        </li>
-        <li class="exp-item">
-          <span class="exp-role">Aide-de-Camp</span>
-          <span class="exp-org">– US Army</span>
-          <span class="exp-dates">2023 – Current</span>
-          <ul>
-            <li>Senior aide for MG Michael Yost, supporting Army Reserve Medical Command operations nationwide.</li>
-          </ul>
-        </li>
-        <li class="exp-item">
-          <span class="exp-role">Chief Information Officer</span>
-          <span class="exp-org">– US Army (Deployment)</span>
-          <span class="exp-dates">2022</span>
-          <ul>
-            <li>Led IT modernization for two 32-bed hospitals and 10+ clinics under combat conditions in Syria and Iraq.</li>
-            <li>Also served as Safety &amp; Security Officer, auditing field practices.</li>
-          </ul>
-        </li>
-        <li class="exp-item">
-          <span class="exp-role">Movement Officer</span>
-          <span class="exp-org">– US Army (Exercise)</span>
-          <span class="exp-dates">2020</span>
-          <ul>
-            <li>Managed six CH-47 Chinook helicopters—personnel, flight logs, and manifests—in Kodiak, Alaska.</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-    <section>
-      <h2>Hobbies &amp; Interests</h2>
-      <ul class="hobbies">
-        <li>App Development (React Native)</li>
-        <li>Skiing &amp; Biking</li>
-        <li>Travel</li>
-        <li>Graphic Design</li>
-        <li>Real Estate Investing</li>
-      </ul>
-    </section>
-    <div class="quote-block">
-      Connor thrives unsupervised, has an impressive work ethic, and his professionalism is well-suited for any team!
-      <span class="quote-author">– COL Dickie Vest, Brigade Commander</span>
+    <div class="glass-card" id="resume-content">
+        <header>
+            <div class="name">Connor Sumpter Carmichael</div>
+            <div class="title">Operational Leader, Army Medical Service Corps Officer, Data Scientist, &amp; App Developer</div>
+            <div class="about">Skilled operational leader with a knack for creating efficiencies. Quick to automate tasks and thrives on complex challenges.</div>
+            <div class="contact">
+                <span><a href="mailto:carmichaelpfi@gmail.com">carmichaelpfi@gmail.com</a></span>
+                <span><a href="tel:19073126672">(907) 312-6672</a></span>
+                <span><a href="https://linkedin.com/in/ConnorCarm" target="_blank">LinkedIn</a></span>
+                <span>Valparaiso, IN (Relocating to CO)</span>
+            </div>
+        </header>
+        <!-- Education -->
+        <section>
+            <h2>Education</h2>
+            <ul>
+                <li>Master’s of Health Administration (2021)</li>
+                <li>Bachelor’s of Healthcare Leadership (2020)</li>
+                <li>Minor in Chemistry</li>
+                <li>Minor in Biology</li>
+                <li>Minor in Military Science</li>
+                <li>Medical Information Management Course (2024)</li>
+                <li>CompTIA Security+ Certification</li>
+                <li>Basic Officer Leadership Course</li>
+                <li>Project Management Professional (PMP) In-Progress</li>
+            </ul>
+        </section>
+        <!-- Awards -->
+        <section>
+            <h2>Notable Awards</h2>
+            <ul class="awards">
+                <li>Meritorious Service Medal</li>
+                <li>National Defense Service Medal</li>
+                <li>Global War on Terrorism Expeditionary Medal</li>
+                <li>Norwegian Foot March Badge</li>
+                <li>German Armed Forces Proficiency Badge</li>
+                <li>Dean’s List &amp; Magna Cum Laude (MS)</li>
+            </ul>
+        </section>
+        <!-- Experience -->
+        <section>
+            <h2>Experience</h2>
+            <ul class="exp-list">
+                <li class="exp-item">
+                    <span class="exp-role">Lead Consultant</span>
+                    <span class="exp-org">- FORVIS Mazars</span>
+                    <span class="exp-dates">2021 – Current</span>
+                    <ul>
+                        <li>Identified and implemented over $75M in savings across orthopedic, benefits, GPO and purchased-services initiatives.</li>
+                        <li>Built a custom Power BI dashboard to benchmark large systems, reducing KPI calculation time from 5 min to 12 sec.</li>
+                    </ul>
+                </li>
+                <li class="exp-item">
+                    <span class="exp-role">Aide-de-Camp</span>
+                    <span class="exp-org">- US Army</span>
+                    <span class="exp-dates">2023 – Current</span>
+                    <ul>
+                        <li>Senior aide for MG Michael Yost, supporting Army Reserve Medical Command operations nationwide.</li>
+                    </ul>
+                </li>
+                <li class="exp-item">
+                    <span class="exp-role">Chief Information Officer</span>
+                    <span class="exp-org">- US Army (Deployment)</span>
+                    <span class="exp-dates">2022</span>
+                    <ul>
+                        <li>Led IT modernization for two 32-bed hospitals and 10+ clinics under combat conditions in Syria and Iraq.</li>
+                        <li>Also served as Safety and Security Officer, auditing field practices.</li>
+                    </ul>
+                </li>
+                <li class="exp-item">
+                    <span class="exp-role">Movement Officer</span>
+                    <span class="exp-org">- US Army (Exercise)</span>
+                    <span class="exp-dates">2020</span>
+                    <ul>
+                        <li>Managed six CH-47 Chinook helicopters—personnel, flight logs, and manifests—in Kodiak, Alaska.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- Hobbies & Interests -->
+        <section>
+            <h2>Hobbies &amp; Interests</h2>
+            <ul class="hobbies">
+                <li>App Development (React Native)</li>
+                <li>Skiing &amp; Biking</li>
+                <li>Travel</li>
+                <li>Graphic Design</li>
+                <li>Real Estate Investing</li>
+            </ul>
+        </section>
+        <!-- Quote -->
+        <div class="quote-block">
+            Connor thrives unsupervised, has an impressive work ethic, and his professionalism is well-suited for any team!
+            <span class="quote-author">– COL Dickie Vest, Brigade Commander</span>
+        </div>
     </div>
-  </div>
-  <script>
-    // --- AI Checker Hold-to-Verify Logic ---
-    const overlay = document.getElementById('ai-checker-overlay');
-    const holdBtn = document.getElementById('holdBtn');
-    const progressBar = document.getElementById('progressBar');
-    const loadingScreen = document.getElementById('loading-screen');
-    const loadingBarFill = document.querySelector('.loading-bar-fill');
-    const resumeContent = document.getElementById('resume-content');
-    let progressInterval, heldTime = 0;
-    const holdDuration = 1500;
-    let isVerifying = false;
+    <script>
+        // --- AI Checker Hold-to-Verify Logic ---
+        const overlay = document.getElementById('ai-checker-overlay');
+        const holdBtn = document.getElementById('holdBtn');
+        const progressBar = document.getElementById('progressBar');
+        const loadingScreen = document.getElementById('loading-screen');
+        const loadingBarFill = document.querySelector('.loading-bar-fill');
+        const resumeContent = document.getElementById('resume-content');
+        let progressInterval, heldTime = 0;
+        const holdDuration = 1500;
+        let isVerifying = false;
 
-    function resetProgress() {
-      if (isVerifying) return;
-      heldTime = 0;
-      progressBar.style.width = '0%';
-      holdBtn.style.transform = 'scale(1)';
-      clearInterval(progressInterval);
-    }
-
-    function startHold(e) {
-      e.preventDefault();
-      if (isVerifying) return;
-      resetProgress();
-      holdBtn.style.transform = 'scale(0.98)';
-      progressInterval = setInterval(() => {
-        heldTime += 20;
-        const pct = Math.min(heldTime / holdDuration, 1) * 100;
-        progressBar.style.width = pct + '%';
-        if (heldTime >= holdDuration) {
-          isVerifying = true;
-          clearInterval(progressInterval);
-          gsap.to(overlay, {
-            opacity: 0,
-            duration: 0.5,
-            ease: "power2.inOut",
-            onComplete: () => {
-              overlay.style.display = 'none';
-              loadingScreen.style.display = 'flex';
-              gsap.fromTo(loadingScreen, {opacity: 0}, {opacity: 1, duration: 0.5});
-              startLoadingAnimation();
-            }
-          });
+        function resetProgress() {
+            if (isVerifying) return;
+            heldTime = 0;
+            progressBar.style.width = '0%';
+            holdBtn.style.transform = 'scale(1)';
+            clearInterval(progressInterval);
         }
-      }, 20);
-    }
 
-    function startLoadingAnimation() {
-      gsap.set('.centered-name', {opacity: 0});
-      gsap.set('.loading-bar', {opacity: 0});
-      gsap.set(resumeContent, {opacity: 0});
-      const tl = gsap.timeline();
-      tl.to('.centered-name', {opacity: 1, duration: 1, ease: "power2.out"})
-        .to('.loading-bar', {opacity: 1, duration: 0.5})
-        .to(loadingBarFill, {width: "100%", duration: 1.5, ease: "power1.inOut"})
-        .to(loadingScreen, {opacity: 0, duration: 0.8, onComplete: () => {
-          loadingScreen.style.display = 'none';
-        }})
-        .to(resumeContent, {opacity: 1, duration: 1, ease: "power2.out"})
-        .from('section', {
-          opacity: 0,
-          y: 30,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power2.out"
-        }, "-=0.5");
-    }
+        function startHold(e) {
+            e.preventDefault();
+            if (isVerifying) return;
+            resetProgress();
+            holdBtn.style.transform = 'scale(0.98)';
+            progressInterval = setInterval(() => {
+                heldTime += 20;
+                const percent = Math.min(heldTime / holdDuration, 1) * 100;
+                progressBar.style.width = percent + '%';
+                if (heldTime >= holdDuration) {
+                    isVerifying = true;
+                    clearInterval(progressInterval);
+                    gsap.to(overlay, {
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                            overlay.style.display = 'none';
+                            loadingScreen.style.display = 'flex';
+                            gsap.fromTo(loadingScreen, {opacity: 0}, {opacity: 1, duration: 0.5});
+                            startLoadingAnimation();
+                        }
+                    });
+                }
+            }, 20);
+        }
 
-    holdBtn.addEventListener('mousedown', startHold);
-    holdBtn.addEventListener('touchstart', startHold, { passive: false });
-    holdBtn.addEventListener('mouseup', resetProgress);
-    holdBtn.addEventListener('mouseleave', resetProgress);
-    holdBtn.addEventListener('touchend', resetProgress);
-    holdBtn.addEventListener('touchcancel', resetProgress);
+        function startLoadingAnimation() {
+            gsap.set('.centered-name', {opacity: 0});
+            gsap.set('.loading-bar', {opacity: 0});
+            gsap.set(resumeContent, {opacity: 0});
+            const tl = gsap.timeline();
+            tl.to('.centered-name', {opacity: 1, duration: 1, ease: "power2.out"})
+              .to('.loading-bar', {opacity: 1, duration: 0.5})
+              .to(loadingBarFill, {width: "100%", duration: 1.5, ease: "power1.inOut"})
+              .to(loadingScreen, {opacity: 0, duration: 0.8, onComplete: () => {
+                  loadingScreen.style.display = 'none';
+              }})
+              .to(resumeContent, {opacity: 1, duration: 1, ease: "power2.out"})
+              .from('section', {
+                  opacity: 0,
+                  y: 30,
+                  duration: 0.8,
+                  stagger: 0.15,
+                  ease: "power2.out"
+              }, "-=0.5");
+        }
 
-    gsap.registerPlugin(ScrollTrigger);
-  </script>
+        holdBtn.addEventListener('mousedown', startHold);
+        holdBtn.addEventListener('touchstart', startHold, { passive: false });
+        holdBtn.addEventListener('mouseup', resetProgress);
+        holdBtn.addEventListener('mouseleave', resetProgress);
+        holdBtn.addEventListener('touchend', resetProgress);
+        holdBtn.addEventListener('touchcancel', resetProgress);
+
+        gsap.registerPlugin(ScrollTrigger);
+    </script>
 </body>
 </html>
